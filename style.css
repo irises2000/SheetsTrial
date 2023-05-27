@@ -1,0 +1,125 @@
+@font-face {
+    font-family: "AppleSDGothicNeoB";
+    src: url('assets/AppleSDGothicNeoB.ttf') format('truetype');
+
+    font-family: "AppleSDGothicNeoM";
+    src: url('assets/AppleSDGothicNeoM.ttf') format('truetype');
+    }
+
+*{
+    margin: 10px;
+    padding: 0px;
+    /* margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px; */
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+.grid-container {
+    display: grid;
+    column-gap: 20px;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+  }
+  
+h1 {
+    font-size: large;
+    font-family: 'AppleSDGothicNeoB';
+}
+
+p {
+    font-family: 'AppleSDGothicNeoM';
+}
+
+#date  {
+    color: gray;
+}
+
+/*interaction*/
+
+.memo {
+    max-width: 20vw;
+    min-height: 30px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 5px;
+    margin: 1vw;
+}
+
+.memo:hover {
+    box-shadow: 0 0 10px 2px rgb(255, 135, 245);
+}
+
+.myclick {
+    box-shadow: 0 0 10px 2px rgb(255, 135, 245);
+}
+
+
+.number-button {
+    position: relative;
+    top: 0px;
+    left: 5px;
+
+    width: 25px;
+    height: 25px;
+    background-color: lightgray;
+    border-radius: 15px;
+    cursor:grab;
+}
+
+.number-button:hover {
+    background-color: rgb(255, 135, 245);
+}
+
+
+/* .number-button:active:focus {
+    background-color: rgb(255, 135, 245);
+} */
+
+
+.number {
+    color: white;
+    font-size: smaller;
+    font-weight: bold;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    padding-top: 5px;
+}
+
+.thoughts {
+    position: relative;
+    top: -5px;
+    max-width: 20vw;
+    min-height: 30px;
+    background-color: rgb(255, 222, 252);
+    border-radius: 15px;
+    /* border: 1px solid rgb(255, 135, 245); */
+    padding: 5px;
+    margin: 1vw;
+    z-index: -10;
+
+    animation-name: slideDown;
+    animation-duration:0.3s;
+    animation-duration: leaner;
+    animation-iteration-count:1;
+    animation-direction:alternate;
+    animation-fill-mode: forwards;
+
+  }
+
+  @-webkit-keyframes slideDown {
+    0% {
+      top:-50px;
+    }
+    100% {
+      top:0px;
+    }
+  }
+
+
+/*to do*/
+/*hover 했을 때 memo 전체 보이게 toggle*/
+/*number-button 클릭했을 때 connection 가진 애들 shadow 보이고, 나머지 opacity 주기 */

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Spreadsheet Sample</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <div class="grid-container" id="spreadsheet-data"></div>
+
+
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+    <script type="text/javascript">
+
+        var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR6PkEOhOqvoJ7UXiwuvq4GGR8H_Lf3uNIqKREi3euyoUhROcc6CSH0Q7UN8YXBdiTt_D3o9fTWu3T5/pub?output=csv';
+        function init() {
+            Papa.parse(public_spreadsheet_url, {
+                download: true,
+                header: true,
+                complete: showInfo
+            })
+        }
+
+
+        window.addEventListener('DOMContentLoaded', init)
+
+
+
+        function showInfo(results) {
+            var data = results.data
+            var dataLength = data.length
+            console.log(data);
+
+
+            for (var i = 0; i < dataLength; i++) {
+                
+                    // [structure]
+                    // <div class="grid-item" id="component-1">
+                    //     <div class="memo" a href="#">
+                    //         <h1>title</h1>
+                    //         <p>text</p>
+                    //         <p id="date">date</p>
+                    //     </div>
+                    //     <div class="thoughts">
+                    //         <p>thoughts</p>
+                    //     </div>
+                    //     <div class="number-button">
+                    //         <p class="number">number</p>
+                    //     </div>
+                    // </div>
+
+                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" + i + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='thoughts'><p>"  + data[i].thoughts + "</p></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
+            }
+
+
+
+            for (var i = 0; i < dataLength; i++) {
+                const el = document.getElementById(`component-${i}`);
+                const memoEl = el.querySelector('.memo');
+                const thoughtsEl = el.querySelector('.thoughts');
+                thoughtsEl.style.display = "none";
+
+                function onHover(event) {
+                    //show the thoughts element
+                    thoughtsEl.style.display = "block";
+                    //add 'memoHover' class
+                    memoComponent.classList.add('memoHover');
+                }
+
+                function onLeft(event) {
+                    thoughtsEl.style.display = "none";
+                    //add 'memoHoverNone' class
+                    memoComponent.classList.remove('memoHover');
+                }
+
+                el.addEventListener("mouseover", onHover);
+                el.addEventListener("mouseout", onLeft);
+
+            }
+
+
+            for (var i = 0; i < dataLength; i++) {
+
+                const el = document.getElementById(`component-${i}`); 
+                const memoEl = el.querySelector('.memo');
+
+
+                // get connection field and split it into an array
+
+                const connection = data[i].connection;
+                const connectionArray = connection.split(',') || [];
+                console.log(connectionArray);
+
+
+                // function onHover(event) {
+                //     //
+   
+                // }
+
+
+                // function onClick(event) {
+                //     // get 'component-{id}' elements for every id in the connection array
+                //     const relatedComponents = connectionArray.map(function (id) {
+                //         return document.getElementById(`component-${id}`);
+                //     });
+                //     // 4. 연관 있는 다른 컴포넌트들 모두에 색을 바꿉니다.
+                //     relatedComponents.forEach(function (component) {
+                //         // get a child component with memo class inside component
+                //         const memoComponent = component.querySelector('.memo');
+                //         // add myclick class
+                //         memoComponent.classList.add('myclick');
+
+                //     });
+                // }
+
+                function onLeft(event) {
+                    const relatedComponents = connectionArray.map(function (id) {
+                        return document.getElementById(`component-${id}`);
+                    });
+                    // 4. 연관 있는 다른 컴포넌트들 모두에 색을 바꿉니다.
+                    relatedComponents.forEach(function (component) {
+                        // get a child component with memo class inside component
+                        const memoComponent = component.querySelector('.memo');
+                        // add myclick class
+                        memoComponent.classList.remove('myclick');
+
+                    });
+                }
+
+                // memoEl.addEventListener("click", onClick);
+                memoEl.addEventListener("mouseout", onLeft);
+
+            }
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+    </script>
+
+</body>
+
+</html>
