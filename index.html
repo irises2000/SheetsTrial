@@ -68,13 +68,15 @@
                     //show the thoughts element
                     thoughtsEl.style.display = "block";
                     //add 'memoHover' class
-                    memoComponent.classList.add('memoHover');
+
+                    memoEl.classList.add('memoHover');
                 }
 
                 function onLeft(event) {
                     thoughtsEl.style.display = "none";
                     //add 'memoHoverNone' class
-                    memoComponent.classList.remove('memoHover');
+                    // memoComponent.classList.remove('memoHover');
+                    memoEl.classList.add('memonoHover');
                 }
 
                 el.addEventListener("mouseover", onHover);

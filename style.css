@@ -19,9 +19,13 @@ body {
 }
 
 .grid-container {
-    display: grid;
+    display:grid;
     column-gap: 20px;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items:flex-start; */
   }
   
 h1 {
@@ -49,11 +53,11 @@ p {
 }
 
 .memo:hover {
-    box-shadow: 0 0 10px 2px rgb(255, 135, 245);
+    /* box-shadow: 0 0 10px 2px rgb(255, 135, 245); */
 }
 
 .myclick {
-    box-shadow: 0 0 10px 2px rgb(255, 135, 245);
+    /* box-shadow: 0 0 10px 2px rgb(255, 135, 245); */
 }
 
 
@@ -100,6 +104,7 @@ p {
     padding: 5px;
     margin: 1vw;
     z-index: -10;
+    
 
     animation-name: slideDown;
     animation-duration:0.3s;
@@ -118,6 +123,7 @@ p {
       top:0px;
     }
   }
+
 
 
 /*to do*/
