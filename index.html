@@ -9,14 +9,23 @@
 </head>
 
 <body>
+    <div class="grid-container" id="header">
+        <button type="button" id="sheetButton" onclick="location.href='iframe.html' ">Spread sheet</button>
+        <h3 id="titleButton">For your second neuroplasticity</h3>
+        <button type="button" id="sheetEditButton" onclick="location.href='https://docs.google.com/spreadsheets/d/1xezzfPsWI5XRuIv8ZBEVO8yIZTv9mCvZY0RTWvECapM/edit?usp=sharing' ">
+            <img id="goEditArrow" src="assets/Unioneditarrow.svg" />
+            <p id="goEdit">Go edit</p>
+        </button>
+    </div>
+
 
     <div class="grid-container" id="spreadsheet-data"></div>
 
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
-    <script type="text/javascript">
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+    <script type="text/javascript">
         var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR6PkEOhOqvoJ7UXiwuvq4GGR8H_Lf3uNIqKREi3euyoUhROcc6CSH0Q7UN8YXBdiTt_D3o9fTWu3T5/pub?output=csv';
+
         function init() {
             Papa.parse(public_spreadsheet_url, {
                 download: true,
@@ -25,126 +34,113 @@
             })
         }
 
-
         window.addEventListener('DOMContentLoaded', init)
-
-
 
         function showInfo(results) {
             var data = results.data
             var dataLength = data.length
             console.log(data);
 
-
             for (var i = 0; i < dataLength; i++) {
-                
-                    // [structure]
-                    // <div class="grid-item" id="component-1">
-                    //     <div class="memo" a href="#">
-                    //         <h1>title</h1>
-                    //         <p>text</p>
-                    //         <p id="date">date</p>
-                    //     </div>
-                    //     <div class="thoughts">
-                    //         <p>thoughts</p>
-                    //     </div>
-                    //     <div class="number-button">
-                    //         <p class="number">number</p>
-                    //     </div>
-                    // </div>
-
-                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" + i + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='thoughts'><p>"  + data[i].thoughts + "</p></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
+                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" +  (parseFloat(i) + 1) + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='thoughts'><p>"  + data[i].thoughts + "</p></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
             }
+            
+
+
+            // thoughts는 처음에 안보이게 하기
+            // for (var i = 0; i < dataLength; i++) {
+            //     const el = document.getElementById(`component-${i+1}`);
+            //     const thoughtsEl = el.querySelector('.thoughts');
+            //     thoughtsEl.style.display = "none";
+            // }
+
+            var activeComponent = null; // Variable to store the active component
 
 
 
             for (var i = 0; i < dataLength; i++) {
-                const el = document.getElementById(`component-${i}`);
+                const el = document.getElementById(`component-${i+1}`);
                 const memoEl = el.querySelector('.memo');
                 const thoughtsEl = el.querySelector('.thoughts');
                 thoughtsEl.style.display = "none";
-
-                function onHover(event) {
-                    //show the thoughts element
-                    thoughtsEl.style.display = "block";
-                    //add 'memoHover' class
-
-                    memoEl.classList.add('memoHover');
-                }
-
-                function onLeft(event) {
-                    thoughtsEl.style.display = "none";
-                    //add 'memoHoverNone' class
-                    // memoComponent.classList.remove('memoHover');
-                    memoEl.classList.add('memonoHover');
-                }
-
-                el.addEventListener("mouseover", onHover);
-                el.addEventListener("mouseout", onLeft);
-
-            }
-
-
-            for (var i = 0; i < dataLength; i++) {
-
-                const el = document.getElementById(`component-${i}`); 
-                const memoEl = el.querySelector('.memo');
-
-
-                // get connection field and split it into an array
+                
 
                 const connection = data[i].connection;
                 const connectionArray = connection.split(',') || [];
-                console.log(connectionArray);
 
+                function onClick(event) {
 
-                // function onHover(event) {
-                //     //
-   
-                // }
+                
+                        if (activeComponent === null) {
+                        // No active component, add highlight to related components
+                        activeComponent = this;
+                        memoEl.classList.add('myclickmain');
+                        thoughtsEl.style.display = "block";
+                        
+                        
+                    
+                        
+                        const relatedComponents = connectionArray.map(function (id) {
+                            return document.getElementById(`component-${id}`);
+                        });
 
+                        relatedComponents.forEach(function (component) {
+                            const relatedMemoComponent = component.querySelector('.memo');
+                            const relatedThoughtsComponent = component.querySelector('.thoughts');
+                            relatedMemoComponent.classList.add('myclick');
+                            relatedThoughtsComponent.style.display = "block";
+                        });
+                         
 
-                // function onClick(event) {
-                //     // get 'component-{id}' elements for every id in the connection array
-                //     const relatedComponents = connectionArray.map(function (id) {
-                //         return document.getElementById(`component-${id}`);
-                //     });
-                //     // 4. 연관 있는 다른 컴포넌트들 모두에 색을 바꿉니다.
-                //     relatedComponents.forEach(function (component) {
-                //         // get a child component with memo class inside component
-                //         const memoComponent = component.querySelector('.memo');
-                //         // add myclick class
-                //         memoComponent.classList.add('myclick');
+                        
 
-                //     });
-                // }
+                    } else if (activeComponent != this) {
+                        // Clicked on the active component again, remove highlight from related components
+                        activeComponent = null;
+                        memoEl.classList.remove('myclickmain');
+                        thoughtsEl.style.display = "none";
 
-                function onLeft(event) {
-                    const relatedComponents = connectionArray.map(function (id) {
-                        return document.getElementById(`component-${id}`);
-                    });
-                    // 4. 연관 있는 다른 컴포넌트들 모두에 색을 바꿉니다.
-                    relatedComponents.forEach(function (component) {
-                        // get a child component with memo class inside component
-                        const memoComponent = component.querySelector('.memo');
-                        // add myclick class
-                        memoComponent.classList.remove('myclick');
+                        const relatedComponents = connectionArray.map(function (id) {
+                            return document.getElementById(`component-${id}`);
+                        });
 
-                    });
+                        relatedComponents.forEach(function (component) {
+                            const relatedMemoComponent = component.querySelector('.memo');
+                            const relatedThoughtsComponent = component.querySelector('.thoughts');
+                            relatedMemoComponent.classList.remove('myclick');
+                            relatedThoughtsComponent.style.display = "none";
+                        });
+
+                        
+                    }
+                    
+                  
                 }
 
-                // memoEl.addEventListener("click", onClick);
-                memoEl.addEventListener("mouseout", onLeft);
+                // function onLeft(event) {
 
+                //     if (activeComponent !== this) {
+                //         const relatedComponents = connectionArray.map(function (id) {
+                //             return document.getElementById(`component-${id}`);
+                //         });
+
+                //         relatedComponents.forEach(function (component) {
+                //             const memoComponent = component.querySelector('.memo');
+                //             memoComponent.classList.remove('myclick');
+                //         });
+                //     }
+                // }
+
+                memoEl.addEventListener("click", onClick);
+                // memoEl.addEventListener("mouseout", onLeft);
+                
             }
         }
-
     </script>
 
     <script type="text/javascript">
 
     </script>
-
 </body>
 
 </html>
