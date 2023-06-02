@@ -9,16 +9,20 @@
 </head>
 
 <body>
+    <!-- ------------------------header----------------------------- -->
+
     <div class="grid-container" id="header">
+
         <button type="button" id="sheetButton" onclick="location.href='iframe.html' ">Spread sheet</button>
         <h3 id="titleButton">For your second neuroplasticity</h3>
         <button type="button" id="sheetEditButton" onclick="location.href='https://docs.google.com/spreadsheets/d/1xezzfPsWI5XRuIv8ZBEVO8yIZTv9mCvZY0RTWvECapM/edit?usp=sharing' ">
             <img id="goEditArrow" src="assets/Unioneditarrow.svg" />
             <p id="goEdit">Go edit</p>
         </button>
+
     </div>
 
-
+    <!-- ---------------------grid container------------------------- -->    
     <div class="grid-container" id="spreadsheet-data"></div>
 
 
@@ -39,24 +43,13 @@
         function showInfo(results) {
             var data = results.data
             var dataLength = data.length
-            console.log(data);
+            //console.log(data);
 
             for (var i = 0; i < dataLength; i++) {
-                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" +  (parseFloat(i) + 1) + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='thoughts'><p>"  + data[i].thoughts + "</p></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
+                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" +  (parseFloat(i) + 1) + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='belonging'><p class='thoughts'>"  + data[i].thoughts + "</p></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
             }
-            
-
-
-            // thoughts는 처음에 안보이게 하기
-            // for (var i = 0; i < dataLength; i++) {
-            //     const el = document.getElementById(`component-${i+1}`);
-            //     const thoughtsEl = el.querySelector('.thoughts');
-            //     thoughtsEl.style.display = "none";
-            // }
 
             var activeComponent = null; // Variable to store the active component
-
-
 
             for (var i = 0; i < dataLength; i++) {
                 const el = document.getElementById(`component-${i+1}`);
@@ -68,12 +61,25 @@
                 const connection = data[i].connection;
                 const connectionArray = connection.split(',') || [];
 
+                // store all memos and thoughts
+                const allMemos = Array.from(document.querySelectorAll('.memo'));
+                const allThoughts = Array.from(document.querySelectorAll('.thoughts'));
+
                 function onClick(event) {
 
+                        // reset all the selected elements
+                        allMemos.forEach(node => {
+                            node.classList.remove('myclickmain');
+                            node.classList.remove('myclick');
+                        });
+
+                        allThoughts.forEach(node => {
+                            node.style.display = "none";
+                        });
                 
-                        if (activeComponent === null) {
-                        // No active component, add highlight to related components
+
                         activeComponent = this;
+
                         memoEl.classList.add('myclickmain');
                         thoughtsEl.style.display = "block";
                         
@@ -89,53 +95,16 @@
                             const relatedThoughtsComponent = component.querySelector('.thoughts');
                             relatedMemoComponent.classList.add('myclick');
                             relatedThoughtsComponent.style.display = "block";
-                        });
-                         
+                        });   
 
-                        
+                    } 
 
-                    } else if (activeComponent != this) {
-                        // Clicked on the active component again, remove highlight from related components
-                        activeComponent = null;
-                        memoEl.classList.remove('myclickmain');
-                        thoughtsEl.style.display = "none";
-
-                        const relatedComponents = connectionArray.map(function (id) {
-                            return document.getElementById(`component-${id}`);
-                        });
-
-                        relatedComponents.forEach(function (component) {
-                            const relatedMemoComponent = component.querySelector('.memo');
-                            const relatedThoughtsComponent = component.querySelector('.thoughts');
-                            relatedMemoComponent.classList.remove('myclick');
-                            relatedThoughtsComponent.style.display = "none";
-                        });
-
-                        
+                    memoEl.addEventListener("click", onClick);
                     }
                     
                   
                 }
-
-                // function onLeft(event) {
-
-                //     if (activeComponent !== this) {
-                //         const relatedComponents = connectionArray.map(function (id) {
-                //             return document.getElementById(`component-${id}`);
-                //         });
-
-                //         relatedComponents.forEach(function (component) {
-                //             const memoComponent = component.querySelector('.memo');
-                //             memoComponent.classList.remove('myclick');
-                //         });
-                //     }
-                // }
-
-                memoEl.addEventListener("click", onClick);
-                // memoEl.addEventListener("mouseout", onLeft);
                 
-            }
-        }
     </script>
 
     <script type="text/javascript">
