@@ -27,6 +27,7 @@ body {
 #sheetButton {
     position: relative;
     justify-self: left;
+    
     width: 150px;
     height: 30px;
     border-radius: 15px;
@@ -48,8 +49,7 @@ body {
 #sheetEditButton {
     position: relative;
     justify-self: right;
-    justify-content: center;
-    display: flex;
+
 
     width: 150px;
     height: 30px;
@@ -60,19 +60,6 @@ body {
     font-size: 15px;
     font-weight: bold;
     color: black;
-}
-
-#goEditArrow {
-    width: 15px;
-    margin: auto;
-    margin-right: 5px;
-}
-
-#goEdit {
-    /* position y to the center */
-    position: relative;
-    margin: auto;
-    margin-left: 5px;
 }
 
 /* ----------------grid-container------------------ */
