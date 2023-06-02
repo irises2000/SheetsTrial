@@ -45,7 +45,7 @@
             //console.log(data);
 
             for (var i = 0; i < dataLength; i++) {
-                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" +  (parseFloat(i) + 1) + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='belonging'><p class='thoughts'>"  + data[i].thoughts + "</p></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
+                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" +  (parseFloat(i) + 1) + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='belonging'><p class='thoughts'>"  + data[i].thoughts + "</p><img src='"+ data[i].img +"'/></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
             }
 
             var activeComponent = null; // Variable to store the active component
@@ -53,7 +53,11 @@
             for (var i = 0; i < dataLength; i++) {
                 const el = document.getElementById(`component-${i+1}`);
                 const memoEl = el.querySelector('.memo');
-                const thoughtsEl = el.querySelector('.thoughts');
+                //if .thoughts length is longer than 0, then put it in the thoughtsEl
+
+
+
+                const thoughtsEl = el.querySelector('.belonging');
                 thoughtsEl.style.display = "none";
                 
 
@@ -62,7 +66,8 @@
 
                 // store all memos and thoughts
                 const allMemos = Array.from(document.querySelectorAll('.memo'));
-                const allThoughts = Array.from(document.querySelectorAll('.thoughts'));
+                const allThoughts = Array.from(document.querySelectorAll('.belonging'));
+
 
                 function onClick(event) {
 
@@ -75,6 +80,13 @@
                         allThoughts.forEach(node => {
                             node.style.display = "none";
                         });
+
+
+                        //memo 를 다시 클릭하면 모든 메모와 생각을 초기화
+                        if (activeComponent === this) {
+                            activeComponent = null;
+                            return;
+                        }
                 
 
                         activeComponent = this;
@@ -91,7 +103,7 @@
 
                         relatedComponents.forEach(function (component) {
                             const relatedMemoComponent = component.querySelector('.memo');
-                            const relatedThoughtsComponent = component.querySelector('.thoughts');
+                            const relatedThoughtsComponent = component.querySelector('.belonging');
                             relatedMemoComponent.classList.add('myclick');
                             relatedThoughtsComponent.style.display = "block";
                         });   
@@ -100,8 +112,7 @@
 
                     memoEl.addEventListener("click", onClick);
                     }
-                    
-                  
+
                 }
                 
     </script>

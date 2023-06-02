@@ -62,7 +62,7 @@ body {
 }
 
 #goEditArrow {
-    width: 15px;
+    width: 17px;
     margin: auto;
     margin-right: 5px;
 }
@@ -71,7 +71,7 @@ body {
     /* position y to the center */
     position: relative;
     margin: auto;
-    margin-left: 5px;
+    margin-left: 0px;
 }
 
 .box {
