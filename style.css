@@ -180,3 +180,23 @@ img {
 /*to do*/
 /*hover 했을 때 memo 전체 보이게 toggle*/
 /*number-button 클릭했을 때 connection 가진 애들 shadow 보이고, 나머지 opacity 주기 */
+
+/* -----------------scrollbar------------------- */
+body::-webkit-scrollbar {
+    width: 8px;
+    /* 스크롤바의 너비 */
+}
+
+body::-webkit-scrollbar-thumb {
+    height: 30%;
+    /* 스크롤바의 길이 */
+    background: lightgray;
+    /* 스크롤바의 색상 */
+
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0);
+    /*스크롤바 뒷 배경 색상*/
+}
