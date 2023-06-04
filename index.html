@@ -6,29 +6,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="icon" href="assets/favicon.png"/>
-    <link rel="apple-touch-icon" href="assets/favicon.png"/>
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
 
 </head>
 
 <body>
-
-
     <!-- ------------------------header----------------------------- -->
-
     <div class="grid-container" id="header">
-
-        <button type="button" id="sheetButton" onclick="location.href='iframe.html' ">Spread sheet</button>
+        <button type="button" id="sheetButton" onclick="location.href='iframe.html'">Spread sheet</button>
         <h3 id="titleButton">For your second neuroplasticity</h3>
         <button type="button" id="sheetEditButton" onclick="location.href='about.html'">About</button>
-
     </div>
 
-    <!-- ---------------------grid container------------------------- -->    
+    <!-- ---------------------grid container------------------------- -->
     <div class="grid-container" id="spreadsheet-data"></div>
 
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
     <script type="text/javascript">
         var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR6PkEOhOqvoJ7UXiwuvq4GGR8H_Lf3uNIqKREi3euyoUhROcc6CSH0Q7UN8YXBdiTt_D3o9fTWu3T5/pub?output=csv';
 
@@ -48,21 +43,18 @@
             //console.log(data);
 
             for (var i = 0; i < dataLength; i++) {
-                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" +  (parseFloat(i) + 1) + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='belonging'><p class='thoughts'>"  + data[i].thoughts + "</p><img src='"+ data[i].img +"'/></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
+                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" + (parseFloat(i) + 1) + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='belonging'><p class='thoughts'>" + data[i].thoughts + "</p><img src='" + data[i].img + "'/></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
             }
 
             var activeComponent = null; // Variable to store the active component
 
             for (var i = 0; i < dataLength; i++) {
-                const el = document.getElementById(`component-${i+1}`);
+                const el = document.getElementById(`component-${i + 1}`);
                 const memoEl = el.querySelector('.memo');
-                //if .thoughts length is longer than 0, then put it in the thoughtsEl
-
-
-
+                const buttonEl = el.querySelector('.number-button');
                 const thoughtsEl = el.querySelector('.belonging');
                 thoughtsEl.style.display = "none";
-                
+        
 
                 const connection = data[i].connection;
                 const connectionArray = connection.split(',') || [];
@@ -71,56 +63,121 @@
                 const allMemos = Array.from(document.querySelectorAll('.memo'));
                 const allThoughts = Array.from(document.querySelectorAll('.belonging'));
 
-
                 function onClick(event) {
-
-                        // reset all the selected elements
-                        allMemos.forEach(node => {
-                            node.classList.remove('myclickmain');
-                            node.classList.remove('myclick');
-                        });
-
-                        allThoughts.forEach(node => {
-                            node.style.display = "none";
-                        });
+                    // remove previously added lines
+                    const prevLines = Array.from(document.querySelectorAll('.connected-line'));
+                    prevLines.forEach(line => line.parentNode.removeChild(line));
 
 
-                        //memo 를 다시 클릭하면 모든 메모와 생각을 초기화
-                        if (activeComponent === this) {
-                            activeComponent = null;
-                            return;
-                        }
-                
+                    // reset all the selected elements
+                    allMemos.forEach(node => {
+                        node.classList.remove('myclickmain');
+                        node.classList.remove('myclick');
+                    });
 
-                        activeComponent = this;
+                    allThoughts.forEach(node => {
+                        node.style.display = "none";
+                    });
 
-                        memoEl.classList.add('myclickmain');
-                        thoughtsEl.style.display = "block";
-                        
-                        
-                    
-                        
-                        const relatedComponents = connectionArray.map(function (id) {
-                            return document.getElementById(`component-${id}`);
-                        });
-
-                        relatedComponents.forEach(function (component) {
-                            const relatedMemoComponent = component.querySelector('.memo');
-                            const relatedThoughtsComponent = component.querySelector('.belonging');
-                            relatedMemoComponent.classList.add('myclick');
-                            relatedThoughtsComponent.style.display = "block";
-                        });   
-
-                    } 
-
-                    memoEl.addEventListener("click", onClick);
+                    // memo를 다시 클릭하면 모든 메모와 생각을 초기화
+                    if (activeComponent === this) {
+                        activeComponent = null;
+                        return;
                     }
 
-                }
+                    activeComponent = this;
+                    memoEl.classList.add('myclickmain');
+                    thoughtsEl.style.display = "block";
+
+                    //if the data of thoughtEl is longer than 0, do not show the thoughtsEl
+                    if (thoughtsEl.innerText.length > 0) {
+                        thoughtsEl.style.display = "block";
+                    } else {
+                        thoughtsEl.style.display = "none";
+                    }
+
+                    const relatedComponents = connectionArray.map(function (id) {
+                        return document.getElementById(`component-${id}`);
+                    });
+
+                    relatedComponents.forEach(function (component) {
+                        const relatedMemoComponent = component.querySelector('.memo');
+                        const relatedButton = component.querySelector('.number-button');
+                        const relatedThoughtsComponent = component.querySelector('.belonging');
+                        relatedMemoComponent.classList.add('myclick');
+                        relatedThoughtsComponent.style.display = "block";
+
+                        //if the data of thoughtEl is longer than 0, do not show the thoughtsEl
+                        if (relatedThoughtsComponent.innerText.length > 0) {
+                            relatedThoughtsComponent.style.display = "block";
+                        } else {
+                            relatedThoughtsComponent.style.display = "none";
+                        }
+
+                        // create a line element
+                        const line = document.createElement('div');
+                        line.classList.add('connected-line');
+                        const startX = buttonEl.offsetLeft + buttonEl.offsetWidth/2;
+                        const startY = buttonEl.offsetTop + buttonEl.offsetHeight/2;
+                        const endX = relatedButton.offsetLeft + relatedButton.offsetWidth/2;
+                        const endY = relatedButton.offsetTop + relatedButton.offsetHeight/2;
+                        const width = endX - startX;
+                        const height = endY - startY;
+                        const angle = Math.atan(height / width) * 180 / Math.PI;
+                        line.style.width = Math.sqrt(width ** 2 + height ** 2) + 'px';
+                        line.style.transform = `rotate(${angle}deg)`;
+                        //if the relatedButton is on the right/top side of the buttonEl, the origin is the bottom left corner of the buttonEl
+                        //if the relatedButton is on the left/bottom side of the buttonEl, the origin is the top right corner of the buttonEl
+                        //if the relatedButton is on the right/bottom side of the buttonEl, the origin is the top left corner of the buttonEl
+                        //if the relatedButton is on the left/top side of the buttonEl, the origin is the bottom right corner of the buttonEl
+                        //if the relatedButton and the buttonEl are on the same horizontal/vertical line, do not rotate the line
+                        if (width > 0 && height > 0) {
+                            line.style.transformOrigin = 'bottom left';
+                        } else if (width < 0 && height > 0) {
+                            line.style.transformOrigin = 'bottom right';
+                        } else if (width > 0 && height < 0) {
+                            line.style.transformOrigin = 'top left';
+                        } else if (width < 0 && height < 0) {
+                            line.style.transformOrigin = 'top right';
+                        } else if (width === 0 && height > 0) {
+                            line.style.transform = 'rotate(90deg)';
+                            line.style.transformOrigin = 'bottom left';
+                        } else if (width === 0 && height < 0) {
+                            line.style.transform = 'rotate(90deg)';
+                            line.style.transformOrigin = 'top left';
+                        } else if (width > 0 && height === 0) {
+                            line.style.transformOrigin = 'bottom left';
+                        } else if (width < 0 && height === 0) {
+                            line.style.transformOrigin = 'bottom right';
+                        }
+
                 
+                        line.style.top = startY + 'px';
+                        line.style.left = startX + 'px';
+                        el.appendChild(line);
+
+                        //line is redrawn when the window is resized
+                        window.addEventListener('resize', function () {
+                            const startX = buttonEl.offsetLeft + buttonEl.offsetWidth;
+                            const startY = buttonEl.offsetTop + buttonEl.offsetHeight / 2;
+                            const endX = relatedButton.offsetLeft;
+                            const endY = relatedButton.offsetTop + relatedButton.offsetHeight / 2;
+                            const width = endX - startX;
+                            const height = endY - startY;
+                            const angle = Math.atan(height / width) * 180 / Math.PI;
+                            line.style.width = Math.sqrt(width ** 2 + height ** 2) + 'px';
+                            line.style.transform = `rotate(${angle}deg)`;
+                            line.style.transformOrigin = (startX, startY);
+                            line.style.top = startY + 'px';
+                            line.style.left = startX + 'px';
+                        });
+                    });
+                }
+
+                memoEl.addEventListener("click", onClick);
+            }
+        }
     </script>
-
-
 </body>
 
 </html>

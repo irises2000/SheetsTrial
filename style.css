@@ -66,8 +66,8 @@ body {
 
 #spreadsheet-data {
     display: grid;
-    column-gap: 20px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     /* display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -98,6 +98,7 @@ p {
     padding: 5px;
     margin: 1vw;
     cursor: grab;
+    justify-self: center;
 }
 
 .myclick {
@@ -109,6 +110,7 @@ p {
     box-shadow: 0 0 20px 2px rgb(255, 135, 245);
     color: white;
 }
+
 
 
 .number-button {
@@ -123,8 +125,16 @@ p {
     cursor: grab;
 }
 
-.number-button:hover {
-    background-color: rgb(255, 135, 245);
+.number-button {
+    position: relative;
+    top: 0px;
+    left: 5px;
+
+    width: 25px;
+    height: 25px;
+    background-color: lightgray;
+    border-radius: 15px;
+    cursor: grab;
 }
 
 
@@ -177,10 +187,6 @@ img {
 }
 
 
-/*to do*/
-/*hover 했을 때 memo 전체 보이게 toggle*/
-/*number-button 클릭했을 때 connection 가진 애들 shadow 보이고, 나머지 opacity 주기 */
-
 /* -----------------scrollbar------------------- */
 body::-webkit-scrollbar {
     width: 8px;
@@ -201,6 +207,9 @@ body::-webkit-scrollbar-track {
     /*스크롤바 뒷 배경 색상*/
 }
 
-#dataImg {
-    display: flex;
+.connected-line {
+    border: 1px solid rgb(255, 135, 245);
+    z-index: -1000;
+    position: absolute;
+    justify-self: center;
 }
