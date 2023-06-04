@@ -66,8 +66,8 @@ body {
 
 #spreadsheet-data {
     display: grid;
-    column-gap: 10px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 0px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     /* display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -97,6 +97,7 @@ p {
     border-radius: 15px;
     padding: 5px;
     margin: 1vw;
+    margin-bottom: 0px;
     cursor: grab;
     justify-self: center;
 }
