@@ -1,5 +1,5 @@
-/* rgb(255, 135, 245) or #EB5DF7 */
-/* rgb(255, 222, 252) or #fbccff*/
+/* #FF87F5 or #EB5DF7 */
+/* #FFDEFC or #fbccff*/
 @font-face {
     font-family: "AppleSDGothicNeoB";
     src: url('assets/AppleSDGothicNeoB.ttf') format('truetype');
@@ -34,7 +34,7 @@ body {
     height: 30px;
     border-radius: 15px;
     background-color: white;
-    border: 1px solid #EB5DF7;
+    border: 1px solid #FF87F5;
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
@@ -45,7 +45,7 @@ body {
     position: relative;
     justify-self: center;
 
-    color:#EB5DF7;
+    color:#FF87F5;
 }
 
 #sheetEditButton {
@@ -57,7 +57,7 @@ body {
     height: 30px;
     border-radius: 15px;
     background-color: white;
-    border: 1px solid #EB5DF7;
+    border: 1px solid #FF87F5;
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
@@ -106,13 +106,17 @@ p {
     justify-self: center;
 }
 
+h1 {
+    margin-bottom: 20px;
+}
+
 .myclick {
-    box-shadow: 0 0 20px 2px #EB5DF7;
+    box-shadow: 0 0 20px 2px #FF87F5;
 }
 
 .myclickmain {
-    background-color: #EB5DF7;
-    box-shadow: 0 0 20px 2px #EB5DF7;
+    background-color: #FF87F5;
+    box-shadow: 0 0 20px 2px #FF87F5;
     color: white;
 }
 
@@ -166,7 +170,7 @@ p {
     margin: 1vw;
     z-index: -10;
 
-    background-color: #fbccff;
+    background-color: #FFDEFC;
     border-radius: 15px;
 
 
@@ -224,13 +228,16 @@ body::-webkit-scrollbar-track {
     margin:none;
 }
 
+/* ----------------first memo-------------- */
+
 .firstmemo {
-    background-color: black;
-    color: lightgray;
+    background-color: white;
+    color: rgb(182, 182, 182);
 }
 
 .howto {
-    color: white;
+    color: black;
+    font-weight: 1000;
     animation-duration: 500ms;
     animation-name: blink;
     animation-iteration-count: infinite;
@@ -244,3 +251,9 @@ body::-webkit-scrollbar-track {
        opacity: 0;
     }
   }
+
+.howtotext {
+    font-weight: bold;
+    font-size: large;
+    color: #FF87F5;
+}

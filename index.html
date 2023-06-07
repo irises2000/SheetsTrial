@@ -71,11 +71,13 @@
                 // fix the color of the first memo only.
                 if (i === 0) {
                     memoEl.classList.add('firstmemo');
+                    thoughtsEl.classList.add('firstmemo');
                     thoughtsEl.style.display = "none";
 
                     memoEl.querySelector('h1').classList.add('howto');
 
-                    thoughtsEl.innerHTML += "<p class='howto'>You can click on the 'Go edit' button in the 'Spread sheet' menu at the top left corner to navigate to the spreadsheet, where you can write or edit memos.</p>"
+                    thoughtsEl.innerHTML += "<p class='howtotext'>You can click on the 'Go edit' button in the 'Spread sheet' menu at the top left corner to navigate to the spreadsheet, where you can write or edit notes.</p>"
+
                 }
 
                 function onClick(event) {
