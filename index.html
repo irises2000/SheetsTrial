@@ -2,12 +2,14 @@
 <html>
 
 <head>
-    <title>For your second neuroplasticity</title>
+    <title>For (y)our second neuroplasticity</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="icon" href="assets/favicon.png" />
     <link rel="apple-touch-icon" href="assets/favicon.png" />
+
+    
 
 </head>
 
@@ -15,7 +17,7 @@
     <!-- ------------------------header----------------------------- -->
     <div class="grid-container" id="header">
         <button type="button" id="sheetButton" onclick="location.href='iframe.html'">Spread sheet</button>
-        <h3 id="titleButton">For your second neuroplasticity</h3>
+        <h3 id="titleButton">For (y)our second neuroplasticity</h3>
         <button type="button" id="sheetEditButton" onclick="location.href='about.html'">About</button>
     </div>
 
@@ -26,6 +28,7 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
     <script type="text/javascript">
         var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR6PkEOhOqvoJ7UXiwuvq4GGR8H_Lf3uNIqKREi3euyoUhROcc6CSH0Q7UN8YXBdiTt_D3o9fTWu3T5/pub?output=csv';
+
 
         function init() {
             Papa.parse(public_spreadsheet_url, {
@@ -43,7 +46,7 @@
             //console.log(data);
 
             for (var i = 0; i < dataLength; i++) {
-                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" + (parseFloat(i) + 1) + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>" + "<p id='date'>" + data[i].date + "</p></div><div class='belonging'><p class='thoughts'>" + data[i].thoughts + "</p><img src='" + data[i].img + "'/></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
+                document.getElementById("spreadsheet-data").innerHTML += "<div class='grid-item" + (parseFloat(i) + 1) + "' id=" + "component-" + (parseFloat(i) + 1) + ">" + "<div class = 'memo' a href='#'><h1>" + data[i].title + "</h1>" + "<p>" + data[i].text + "</p>"  + "<div class = 'bottomTxt'> <p id='date'>" + data[i].date + "</p>"+ "<p id='who'>" + data[i].who + "</p></div></div><div class='belonging'><p class='thoughts'>" + data[i].thoughts + "</p><img src='" + data[i].img + "' alt='"+ data[i].img +"'/></div><div class ='number-button'><p class='number'>" + data[i].number + "</p></div></div>"
             }
 
             var activeComponent = null; // Variable to store the active component
@@ -59,9 +62,21 @@
                 const connection = data[i].connection;
                 const connectionArray = connection.split(',') || [];
 
+
                 // store all memos and thoughts
                 const allMemos = Array.from(document.querySelectorAll('.memo'));
                 const allThoughts = Array.from(document.querySelectorAll('.belonging'));
+
+
+                // fix the color of the first memo only.
+                if (i === 0) {
+                    memoEl.classList.add('firstmemo');
+                    thoughtsEl.style.display = "none";
+
+                    memoEl.querySelector('h1').classList.add('howto');
+
+                    thoughtsEl.innerHTML += "<p class='howto'>You can click on the 'Go edit' button in the 'Spread sheet' menu at the top left corner to navigate to the spreadsheet, where you can write or edit memos.</p>"
+                }
 
                 function onClick(event) {
                     // remove previously added lines
@@ -85,9 +100,11 @@
                         return;
                     }
 
+
                     activeComponent = this;
                     memoEl.classList.add('myclickmain');
                     thoughtsEl.style.display = "block";
+
 
                     //if the data of thoughtEl is longer than 0, do not show the thoughtsEl
                     if (thoughtsEl.innerText.length > 0) {
@@ -114,7 +131,7 @@
                             relatedThoughtsComponent.style.display = "none";
                         }
 
-                        // create a line element
+                        
                         const line = document.createElement('div');
                         line.classList.add('connected-line');
                         const startX = buttonEl.offsetLeft + buttonEl.offsetWidth/2;
@@ -123,38 +140,50 @@
                         const endY = relatedButton.offsetTop + relatedButton.offsetHeight/2;
                         const width = endX - startX;
                         const height = endY - startY;
-                        const angle = Math.atan(height / width) * 180 / Math.PI;
-                        line.style.width = Math.sqrt(width ** 2 + height ** 2) + 'px';
-                        line.style.transform = `rotate(${angle}deg)`;
-                        //if the relatedButton is on the right/top side of the buttonEl, the origin is the bottom left corner of the buttonEl
-                        //if the relatedButton is on the left/bottom side of the buttonEl, the origin is the top right corner of the buttonEl
-                        //if the relatedButton is on the right/bottom side of the buttonEl, the origin is the top left corner of the buttonEl
-                        //if the relatedButton is on the left/top side of the buttonEl, the origin is the bottom right corner of the buttonEl
-                        //if the relatedButton and the buttonEl are on the same horizontal/vertical line, do not rotate the line
+                
+
                         if (width > 0 && height > 0) {
                             line.style.transformOrigin = 'bottom left';
+   
                         } else if (width < 0 && height > 0) {
-                            line.style.transformOrigin = 'bottom right';
+                            line.style.transformOrigin = 'bottom left';
+                            
                         } else if (width > 0 && height < 0) {
                             line.style.transformOrigin = 'top left';
+
                         } else if (width < 0 && height < 0) {
-                            line.style.transformOrigin = 'top right';
+                            line.style.transformOrigin = 'bottom left';
+
                         } else if (width === 0 && height > 0) {
                             line.style.transform = 'rotate(90deg)';
                             line.style.transformOrigin = 'bottom left';
+
                         } else if (width === 0 && height < 0) {
                             line.style.transform = 'rotate(90deg)';
                             line.style.transformOrigin = 'top left';
+     
                         } else if (width > 0 && height === 0) {
                             line.style.transformOrigin = 'bottom left';
                         } else if (width < 0 && height === 0) {
                             line.style.transformOrigin = 'bottom right';
                         }
 
+                        const angle = Math.atan(height / width) * 180 / Math.PI;
+                        if(width < 0) {
+                            line.style.transform = `rotate(${angle + 180}deg)`;
+                        } else {
+                            line.style.transform = `rotate(${angle}deg)`;
+                        }
+                        
+                        line.style.width = Math.sqrt(width ** 2 + height ** 2) + 'px';
                 
+
                         line.style.top = startY + 'px';
-                        line.style.left = startX + 'px';
+                       line.style.left = startX + 'px';
+
                         el.appendChild(line);
+
+
 
                         //line is redrawn when the window is resized
                         window.addEventListener('resize', function () {

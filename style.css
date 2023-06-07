@@ -1,3 +1,5 @@
+/* rgb(255, 135, 245) or #EB5DF7 */
+/* rgb(255, 222, 252) or #fbccff*/
 @font-face {
     font-family: "AppleSDGothicNeoB";
     src: url('assets/AppleSDGothicNeoB.ttf') format('truetype');
@@ -12,7 +14,7 @@
 }
 
 body {
-    background-color: whitesmoke;
+    background-color: rgb(238, 238, 238);
     overflow: overlay
 }
 
@@ -32,7 +34,7 @@ body {
     height: 30px;
     border-radius: 15px;
     background-color: white;
-    border: 1px solid rgb(255, 135, 245);
+    border: 1px solid #EB5DF7;
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
@@ -43,7 +45,7 @@ body {
     position: relative;
     justify-self: center;
 
-    color: rgb(255, 135, 245);
+    color:#EB5DF7;
 }
 
 #sheetEditButton {
@@ -55,7 +57,7 @@ body {
     height: 30px;
     border-radius: 15px;
     background-color: white;
-    border: 1px solid rgb(255, 135, 245);
+    border: 1px solid #EB5DF7;
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
@@ -67,7 +69,7 @@ body {
 #spreadsheet-data {
     display: grid;
     column-gap: 0px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
     /* display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -84,8 +86,11 @@ p {
     font-family: 'AppleSDGothicNeoM';
 }
 
-#date {
-    color: gray;
+.bottomTxt {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+    color: rgb(182, 182, 182);
 }
 
 /*------------------interaction-----------------*/
@@ -97,21 +102,23 @@ p {
     border-radius: 15px;
     padding: 5px;
     margin: 1vw;
-    margin-bottom: 0px;
     cursor: grab;
     justify-self: center;
 }
 
 .myclick {
-    box-shadow: 0 0 20px 2px rgb(255, 135, 245);
+    box-shadow: 0 0 20px 2px #EB5DF7;
 }
 
 .myclickmain {
-    background-color: rgb(255, 135, 245);
-    box-shadow: 0 0 20px 2px rgb(255, 135, 245);
+    background-color: #EB5DF7;
+    box-shadow: 0 0 20px 2px #EB5DF7;
     color: white;
 }
 
+.myclickbutton {
+    background-color: black;
+}
 
 
 .number-button {
@@ -159,7 +166,7 @@ p {
     margin: 1vw;
     z-index: -10;
 
-    background-color: rgb(255, 222, 252);
+    background-color: #fbccff;
     border-radius: 15px;
 
 
@@ -170,6 +177,7 @@ p {
     animation-direction: alternate;
     animation-fill-mode: forwards;
 }
+
 
 @-webkit-keyframes slideDown {
     0% {
@@ -209,8 +217,30 @@ body::-webkit-scrollbar-track {
 }
 
 .connected-line {
-    border: 1px solid rgb(255, 135, 245);
+    border: 1px solid lightgray;
     z-index: -1000;
     position: absolute;
-    justify-self: center;
+    /* justify-self: center; */
+    margin:none;
 }
+
+.firstmemo {
+    background-color: black;
+    color: lightgray;
+}
+
+.howto {
+    color: white;
+    animation-duration: 500ms;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+@keyframes blink {
+    from {
+       opacity: 1;
+    }
+    to {
+       opacity: 0;
+    }
+  }
