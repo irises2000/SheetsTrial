@@ -198,10 +198,43 @@
                             const endY = relatedButton.offsetTop + relatedButton.offsetHeight / 2;
                             const width = endX - startX;
                             const height = endY - startY;
-                            const angle = Math.atan(height / width) * 180 / Math.PI;
-                            line.style.width = Math.sqrt(width ** 2 + height ** 2) + 'px';
+    
+                            if (width > 0 && height > 0) {
+                            line.style.transformOrigin = 'bottom left';
+   
+                        } else if (width < 0 && height > 0) {
+                            line.style.transformOrigin = 'bottom left';
+                
+                            
+                        } else if (width > 0 && height < 0) {
+                            line.style.transformOrigin = 'top left';
+
+                        } else if (width < 0 && height < 0) {
+                            line.style.transformOrigin = 'bottom left';
+
+                        } else if (width === 0 && height > 0) {
+                            line.style.transform = 'rotate(90deg)';
+                            line.style.transformOrigin = 'bottom left';
+
+                        } else if (width === 0 && height < 0) {
+                            line.style.transform = 'rotate(90deg)';
+                            line.style.transformOrigin = 'top left';
+     
+                        } else if (width > 0 && height === 0) {
+                            line.style.transformOrigin = 'bottom left';
+                        } else if (width < 0 && height === 0) {
+                            line.style.transformOrigin = 'bottom right';
+                        }
+
+                        const angle = Math.atan(height / width) * 180 / Math.PI;
+                        if(width < 0) {
+                            line.style.transform = `rotate(${angle + 180}deg)`;
+                        } else {
                             line.style.transform = `rotate(${angle}deg)`;
-                            line.style.transformOrigin = (startX, startY);
+                        }
+                        
+                        line.style.width = Math.sqrt(width ** 2 + height ** 2) + 'px';
+
                             line.style.top = startY + 'px';
                             line.style.left = startX + 'px';
                         });
