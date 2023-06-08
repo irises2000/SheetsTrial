@@ -46,13 +46,13 @@ body {
     color: rgb(255, 135, 245);
 }
 
-#sheetEditButton {
+.notionButton {
     position: relative;
-    justify-self: right;
+    justify-self: center;
 
 
-    width: 150px;
-    height: 30px;
+    width: 120px;
+    height: 20px;
     border-radius: 15px;
     background-color: white;
     border: 1px solid rgb(255, 135, 245);
@@ -102,6 +102,8 @@ img {
     height: 80vh;
     overflow-y: auto;
 }
+
+
 
 /* -----------------scrollbar------------------- */
 .pagePopUp::-webkit-scrollbar {
