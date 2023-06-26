@@ -14,8 +14,9 @@
 }
 
 body {
-    background-color: rgb(238, 238, 238);
-    overflow: overlay
+    /* background-color: rgb(238, 238, 238); */
+    background-color: white;
+    overflow: overlay;
 }
 
 /* ----------------------header---------------------- */
@@ -101,6 +102,7 @@ p {
     max-width: 20vw;
     min-height: 30px;
     background-color: white;
+    box-shadow: 0 0 20px 2px  #f0f0f0;
     border-radius: 15px;
     padding: 5px;
     margin: 1vw;
@@ -235,6 +237,7 @@ body::-webkit-scrollbar-track {
 .firstmemo {
     background-color: white;
     color: rgb(182, 182, 182);
+    box-shadow: 0 0 20px 2px  #f0f0f0;
 }
 
 .howto {
